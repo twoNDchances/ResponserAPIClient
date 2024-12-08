@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Responser Management</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!--
+    =========================================================
+    * ArchitectUI HTML Theme Dashboard - v1.0.0
+    =========================================================
+    * Product Page: https://dashboardpack.com
+    * Copyright 2019 DashboardPack (https://dashboardpack.com)
+    * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+    =========================================================
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/general.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow bg-danger header-text-light">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button"
+                        class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="app-header__content">
+                <div class="app-header-left">
+                    <ul class="header-menu nav">
+                        <li class="nav-item">
+                            <a href="responser_management.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-shield"> </i>
+                                Responser Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="iptables_executions.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-shield"> </i>
+                                IPTables Executions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="modsecurity_executions.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-lock"> </i>
+                                ModSecurity Executions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="swarm_executions.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-box2"> </i>
+                                Swarm Executions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="elasticsearch.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-server"> </i>
+                                Elasticsearch
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="configuration.html" class="nav-link">
+                                <i class="nav-link-icon pe-7s-config"> </i>
+                                Configuration Backend
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                                data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button"
+                            class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                <div class="scrollbar-sidebar sidebar-scroller">
+                    <div class="app-sidebar__inner">
+                        <ul class="vertical-nav-menu">
+                            <li class="app-sidebar__heading text-danger">Main</li>
+                            <li>
+                                <a href="responser_management.html" class="mm-active">
+                                    <i class="metismenu-icon pe-7s-play"></i>
+                                    Responser Management
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-plus"></i>
+                                    Responser Creation
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="iptables_responser_creation.html">
+                                            <i class="metismenu-icon"></i>
+                                            Firewall (IPTables)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="modsecurity_responser_creation.html">
+                                            <i class="metismenu-icon"></i>
+                                            Firewall (Mod Security)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="swarm_responser_creation.html">
+                                            <i class="metismenu-icon"></i>
+                                            Swarm (Docker Swarm)
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="app-sidebar__heading text-danger">Executions</li>
+                            <li>
+                                <a href="iptables_executions.html">
+                                    <i class="metismenu-icon pe-7s-shield"></i>
+                                    IPTables
+                                </a>
+                                <a href="modsecurity_executions.html">
+                                    <i class="metismenu-icon pe-7s-lock"></i>
+                                    Mod Security
+                                </a>
+                                <a href="swarm_executions.html">
+                                    <i class="metismenu-icon pe-7s-box2"></i>
+                                    Swarm
+                                </a>
+                            </li>
+                            <li class="app-sidebar__heading text-danger">Setup</li>
+                            <li>
+                                <a href="elasticsearch.html">
+                                    <i class="metismenu-icon pe-7s-server"></i>
+                                    Elasticsearch
+                                </a>
+                            </li>
+                            <li>
+                                <a href="configuration.html">
+                                    <i class="metismenu-icon pe-7s-config"></i>
+                                    Configuration Backend
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="app-main__outer">
+                <div class="app-main__inner">
+                    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-play icon-gradient bg-ripe-malin"></i>
+                                </div>
+                                <div>Responser Management
+                                    <div class="page-title-subheading">
+                                        Manage all rule from Responsers
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h1 class="card-title medium-header text-danger">IPTables</h1>
+                            <div id="iptablesManagement" class="text-center table-responsive"></div>
+                        </div>
+                    </div>
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h1 class="card-title medium-header text-warning">Mod Security</h1>
+                            <div id="modsecurityManagement" class="text-center table-responsive"></div>
+                        </div>
+                    </div>
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h1 class="card-title medium-header text-info">Swarm</h1>
+                            <div id="swarmManagement" class="text-center table-responsive"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./assets/scripts/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="module" src="./assets/scripts/responser_management.js"></script>
+    <script>
+        function showIPTables(event) {
+            const id = event.getAttribute('data-id')
+            $('#responserDetailsModalTitle').text('Responser ID: #' + id)
+            $('#updateButton').attr('data-id', id)
+            callAPI(
+                'GET',
+                '/api/iptables/show/' + id,
+                function () {
+                    $('#responserDetailsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#responserDetailsModalBody').empty().append(`
+                        <form id="iptablesResponserUpdateForm">
+                            <div class="position-relative form-group">
+                                <label for="responserName" class="">Responser Name</label>
+                                <input name="responserName" id="responserName" placeholder="Responser Name" type="text" class="form-control" value="${responseData.data.responser_name}">
+                                <div id="responserNameErrorField"></div>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="responserConfiguration" class="">Responser Configuration</label>
+                                <pre><textarea rows="17" name="responserConfiguration" id="responserConfiguration" class="form-control">${JSON.stringify(JSON.parse(responseData.data.responser_configuration), null, 4)}</textarea></pre>
+                                <div id="responserConfigurationErrorField"></div>
+                            </div>
+                        </form>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#responserDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#responserDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function showIPTablesErrorLogs(event) {
+            const id = event.getAttribute('data-id')
+            const responserName = event.getAttribute('data-responser-name')
+            $('#emptyButton').attr('data-responser-name', responserName)
+            $('#errorLogsModalTitle').text('Error logs ID: #' + id)
+            callAPI(
+                'GET',
+                '/api/iptables/list-errorlogs/' + responserName,
+                function () {
+                    $('#errorLogsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#errorLogsModalBody').empty().append(`
+                        <pre><textarea class="form-control" disabled="true" rows="20">${JSON.stringify(responseData.data, null, 4)}</textarea></pre>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#errorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#errorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function removeIPTablesResponser(event) {
+            $('#removeButton').attr('data-responser-name', event.getAttribute('data-responser-name')).attr('data-id', event.getAttribute('data-id'))
+        }
+
+        function showModSecurity(event) {
+            const id = event.getAttribute('data-id')
+            $('#updateModSecurityButton').attr('data-id', id)
+            callAPI(
+                'GET',
+                '/api/modsecurity/show/' + id,
+                function () {
+                    $('#modsecurityDetailsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#modsecurityDetailsModalBody').empty().append(`
+                        <form id="modsecurityResponserUpdateForm">
+                            <div class="position-relative form-group">
+                                <label for="modsecurityResponserName" class="">Responser Name</label>
+                                <input name="modsecurityResponserName" id="modsecurityResponserName" placeholder="Responser Name" type="text" class="form-control" value="${responseData.data.responser_name}">
+                                <div id="modsecurityResponserNameErrorField"></div>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="modsecurityResponserConfiguration" class="">Responser Configuration</label>
+                                <pre><textarea rows="24" name="modsecurityResponserConfiguration" id="modsecurityResponserConfiguration" class="form-control">${JSON.stringify(JSON.parse(responseData.data.responser_configuration), null, 4)}</textarea></pre>
+                                <div id="modsecurityResponserConfigurationErrorField"></div>
+                            </div>
+                        </form>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#modsecurityDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#modsecurityDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function showModSecurityErrorLogs(event) {
+            const id = event.getAttribute('data-id')
+            const responserName = event.getAttribute('data-responser-name')
+            $('#emptyModSecurityErrorlogButton').attr('data-responser-name', responserName)
+            $('#modsecurityErrorLogsModalTitle').text('Error logs ID: #' + id)
+            callAPI(
+                'GET',
+                '/api/modsecurity/list-errorlogs/' + responserName,
+                function () {
+                    $('#modsecurityErrorLogsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#modsecurityErrorLogsModalBody').empty().append(`
+                        <pre><textarea class="form-control" disabled="true" rows="20">${JSON.stringify(responseData.data, null, 4)}</textarea></pre>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#modsecurityErrorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#modsecurityErrorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function removeModSecurityResponser(event) {
+            $('#removeModSecurityButton').attr('data-responser-name', event.getAttribute('data-responser-name')).attr('data-id', event.getAttribute('data-id'))
+        }
+
+        function callAPI(method, endpoint, onLoading, onSuccess, onError, body = null) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 0 || this.readyState == 1 || this.readyState == 2 || this.readyState == 3) {
+                    onLoading()
+                }
+                else if (this.readyState == 4 && this.status == 200) {
+                    onSuccess(this)
+                }
+                else if (this.status != 200) {
+                    onError(this)
+                }
+            }
+            xhr.open(method, getCookie('backendAPI') + endpoint);
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.timeout = 15000
+            if (body == null) {
+                xhr.send();
+            }
+            else {
+                xhr.send(body);
+            }
+        }
+        
+        function notificator(title, message, type) {
+            toastr.options.closeMethod = 'fadeOut';
+            toastr.options.closeDuration = 300;
+            toastr.options.closeEasing = 'swing';
+            toastr.options.timeOut = 5000;
+            toastr.options.showMethod = 'slideDown';
+            toastr.options.hideMethod = 'slideUp';
+            toastr.options.preventDuplicates = true;
+            if (type == 'info') {
+                toastr.info(message, title);
+            }
+            if (type == 'success') {
+                toastr.success(message, title);
+            }
+            if (type == 'warning') {
+                toastr.warning(message, title);
+            }
+            if (type == 'error') {
+                toastr.error(message, title);
+            }
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "="
+            const cookiesArray = document.cookie.split(';')
+            for (let i = 0; i < cookiesArray.length; i++) {
+                let cookie = cookiesArray[i]
+                while (cookie.charAt(0) === ' ') {
+                    cookie = cookie.substring(1, cookie.length)
+                }
+                if (cookie.indexOf(nameEQ) === 0) {
+                    return decodeURIComponent(cookie.substring(nameEQ.length, cookie.length))
+                }
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="responserDetailsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responserDetailsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="responserDetailsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="responserDetailsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="updateButton">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="errorLogsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorLogsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="errorLogsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="errorLogsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="emptyButton">Empty Logs</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="responserDeleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responserDeleteModalTitle">Remove Responser</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                After remove, Executions of this Responser still exist!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="responserDeleteModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="removeButton">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modsecurityDetailsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modsecurityDetailsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modsecurityDetailsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modsecurityDetailsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="updateModSecurityButton">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modsecurityErrorLogsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modsecurityErrorLogsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modsecurityErrorLogsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modsecurityErrorLogsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="emptyModSecurityErrorlogButton">Empty Logs</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modsecurityDeleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modsecurityDeleteModalTitle">Remove Responser</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                After remove, Executions of this Responser still exist!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modsecurityDeleteModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="removeModSecurityButton">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
