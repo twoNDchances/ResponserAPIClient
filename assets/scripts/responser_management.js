@@ -166,6 +166,83 @@ $(document).ready(function () {
         }
     )
 
+    fetchData(
+        '/api/swarm/list',
+        'GET',
+        null,
+        function () {
+            $('#swarmManagement').empty().append(`
+                <div class="small-item-center">
+                    <div class="loader"></div>
+                </div>
+            `)
+        },
+        function (data) {
+            $('#swarmManagement').empty().append(`
+                <table class="mb-0 table table-striped ruleManagementTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Responser Name</th>
+                            <th>Is Enabled</th>
+                            <th>Up Numbers</th>
+                            <th>Down Numbers</th>
+                            <th>View Details</th>
+                            <th>Errorlogs</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id="swarmManagementTable">
+                    </tbody>
+                </table>
+            `)            
+            for (let index = 0; index < data.data.length; index++) {
+                const element = data.data[index];
+                $('#swarmManagementTable').append(`
+                    <tr id="swarmResponser_${element.id}">
+                        <th>${element.id}</th>
+                        <td>${element.responser_name}</td>
+                        <td>${element.is_enabled == true ? 'Yes' : 'No'}</td>
+                        <td>${element.up_nums}</td>
+                        <td>${element.down_nums}</td>
+                        <td>
+                            <button class="mb-2 mr-2 btn btn-light" data-toggle="modal" data-target="#swarmDetailsModal" data-id="${element.id}" onclick=showSwarm(this)>
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="mb-2 mr-2 btn btn-light" data-toggle="modal" data-target="#swarmErrorLogsModal" data-id="${element.id}" data-responser-name="${element.responser_name}" onclick=showSwarmErrorLogs(this)>
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="mb-2 mr-2 btn btn-danger" data-toggle="modal" data-target="#swarmDeleteModal" data-id="${element.id}" data-responser-name="${element.responser_name}" onclick=removeSwarmResponser(this)>
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `)
+            }
+        },
+        function (status) {
+            if (status == 404) {
+                $('#swarmManagement').empty().append(`
+                    <div class="item-center">
+                        Empty
+                    </div>
+                `)
+            }
+            else {
+                $('#swarmManagement').empty().append(`
+                    <div class="item-center">
+                        Error
+                    </div>
+                `)
+                notificator('Error', 'Can\'t fetch Mod Security', 'error')
+            }
+        }
+    )
+
     $('#updateButton').on('click', function () {
         const id = document.getElementById('updateButton').getAttribute('data-id')
         const formJSON = {
@@ -370,6 +447,109 @@ $(document).ready(function () {
             },
             function (error) {
                 $('#removeModSecurityButton').empty().text('Remove').removeAttr('disabled')
+                const responseError = JSON.parse(error.responseText)
+                notificator('Error', responseError.reason, 'error')
+            }
+        )
+    })
+
+    $('#updateSwarmButton').on('click', function () {
+        const id = document.getElementById('updateSwarmButton').getAttribute('data-id')
+        const formJSON = {
+            responserName: document.getElementById('swarmResponserName').value,
+            responserConfiguration: JSON.parse(document.getElementById('swarmResponserConfiguration').value)
+        }
+        callAPI(
+            'PUT',
+            '/api/swarm/update/' + id,
+            function () {
+                $('#updateSwarmButton').empty().append(`
+                    <div class="loader"></div>
+                `).attr('disabled', true)
+            },
+            function (data) {
+                $('#updateSwarmButton').empty().text('Update').removeAttr('disabled')
+                notificator('Success', 'Update successfully', 'success')
+                $('#swarmDetailsModalCloseButton').click()
+                const responseData = JSON.parse(data.responseText)
+                $(`#swarmResponser_${responseData.data.id}`).empty().append(`
+                    <th>${responseData.data.id}</th>
+                    <td>${responseData.data.responser_name}</td>
+                    <td>${responseData.data.is_enabled == true ? 'Yes' : 'No'}</td>
+                    <td>${responseData.data.up_nums}</td>
+                    <td>${responseData.data.down_nums}</td>
+                    <td>
+                        <button class="mb-2 mr-2 btn btn-light" data-toggle="modal" data-target="#swarmDetailsModal" data-id="${responseData.data.id}" onclick=showSwarm(this)>
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="mb-2 mr-2 btn btn-light" data-toggle="modal" data-target="#swarmErrorLogsModal" data-id="${responseData.data.id}" data-responser-name="${responseData.data.responser_name}" onclick=showSwarmErrorLogs(this)>
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="mb-2 mr-2 btn btn-danger" data-toggle="modal" data-target="#swarmDeleteModal" data-id="${responseData.data.id}" data-responser-name="${responseData.data.responser_name}" onclick=removeSwarmResponser(this)>
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                `)
+            },
+            function (error) {
+                $('#updateSwarmButton').empty().text('Update').removeAttr('disabled')
+                const responseError = JSON.parse(error.responseText)
+                notificator('Error', responseError.reason, 'error')
+            },
+            JSON.stringify(formJSON)
+        )
+    })
+
+    $('#emptySwarmErrorlogButton').on('click', function () {
+        const responserName = document.getElementById('emptySwarmErrorlogButton').getAttribute('data-responser-name')
+        callAPI(
+            'DELETE',
+            '/api/swarm/empty-errorlogs/' + responserName,
+            function () {
+                $('#emptySwarmErrorlogButton').empty().append(`
+                    <div class="loader"></div>
+                `).attr('disabled', true)
+            },
+            function () {
+                $('#emptySwarmErrorlogButton').empty().text('Empty Logs').removeAttr('disabled')
+                notificator('Success', 'Empty Errorlogs successfully', 'success')
+                $('#swarmErrorLogsModalBody').empty().append(`
+                    <div class="item-center">
+                        Empty
+                    </div>
+                `)
+            },
+            function (error) {
+                $('#emptySwarmErrorlogButton').empty().text('Empty Logs').removeAttr('disabled')
+                const responseError = JSON.parse(error.responseText)
+                notificator('Error', responseError.reason, 'error')
+            }
+        )
+    })
+
+    $('#removeSwarmButton').on('click', function () {
+        const responserName = document.getElementById('removeSwarmButton').getAttribute('data-responser-name')
+        const id = document.getElementById('removeSwarmButton').getAttribute('data-id')
+        callAPI(
+            'DELETE',
+            '/api/swarm/delete/' + responserName,
+            function () {
+                $('#removeSwarmButton').empty().append(`
+                    <div class="loader"></div>
+                `).attr('disabled', true)
+            },
+            function () {
+                $('#removeSwarmButton').empty().text('Remove').removeAttr('disabled')
+                $('#swarmDeleteModalCloseButton').click()
+                $(`#swarmResponser_${id}`).remove()
+                notificator('Success', 'Remove Responser successfully', 'success')
+            },
+            function (error) {
+                $('#removeSwarmButton').empty().text('Remove').removeAttr('disabled')
                 const responseError = JSON.parse(error.responseText)
                 notificator('Error', responseError.reason, 'error')
             }

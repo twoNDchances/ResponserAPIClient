@@ -232,7 +232,7 @@
                     </div>
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h1 class="card-title medium-header text-warning">Mod Security</h1>
+                            <h1 class="card-title medium-header text-primary">Mod Security</h1>
                             <div id="modsecurityManagement" class="text-center table-responsive"></div>
                         </div>
                     </div>
@@ -351,6 +351,7 @@
 
         function showModSecurity(event) {
             const id = event.getAttribute('data-id')
+            $('#modsecurityDetailsModalTitle').text('Responser ID: #' + id)
             $('#updateModSecurityButton').attr('data-id', id)
             callAPI(
                 'GET',
@@ -444,6 +445,112 @@
 
         function removeModSecurityResponser(event) {
             $('#removeModSecurityButton').attr('data-responser-name', event.getAttribute('data-responser-name')).attr('data-id', event.getAttribute('data-id'))
+        }
+
+        function showSwarm(event) {
+            const id = event.getAttribute('data-id')
+            $('#swarmDetailsModalTitle').text('Responser ID: #' + id)
+            $('#updateSwarmButton').attr('data-id', id)
+            callAPI(
+                'GET',
+                '/api/swarm/show/' + id,
+                function () {
+                    $('#swarmDetailsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#swarmDetailsModalBody').empty().append(`
+                        <form id="swarmResponserUpdateForm">
+                            <div class="position-relative form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="swarmResponserName" class="">Responser Name</label>
+                                        <input name="swarmResponserName" id="swarmResponserName" placeholder="Responser Name" type="text" class="form-control" value="${responseData.data.responser_name}">
+                                        <div id="swarmResponserNameErrorField"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="">Current Numbers</label>
+                                        <input type="text" class="form-control" value="${responseData.data.current_nums}" disabled="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="swarmResponserConfiguration" class="">Responser Configuration</label>
+                                <pre><textarea rows="7" name="swarmResponserConfiguration" id="swarmResponserConfiguration" class="form-control">${JSON.stringify(JSON.parse(responseData.data.responser_configuration), null, 4)}</textarea></pre>
+                                <div id="swarmResponserConfigurationErrorField"></div>
+                            </div>
+                        </form>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#swarmDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#swarmDetailsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function showSwarmErrorLogs(event) {
+            const id = event.getAttribute('data-id')
+            const responserName = event.getAttribute('data-responser-name')
+            $('#emptySwarmErrorlogButton').attr('data-responser-name', responserName)
+            $('#swarmErrorLogsModalTitle').text('Error logs ID: #' + id)
+            callAPI(
+                'GET',
+                '/api/swarm/list-errorlogs/' + responserName,
+                function () {
+                    $('#swarmErrorLogsModalBody').empty().append(`
+                        <div class="small-item-center">
+                            <div class="loader"></div>
+                        </div>
+                    `)
+                },
+                function (data) {
+                    const responseData = JSON.parse(data.responseText)
+                    $('#swarmErrorLogsModalBody').empty().append(`
+                        <pre><textarea class="form-control" disabled="true" rows="20">${JSON.stringify(responseData.data, null, 4)}</textarea></pre>
+                    `)
+                },
+                function (error) {
+                    if (error.status == 404) {
+                        $('#swarmErrorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Empty
+                            </div>
+                        `)
+                    }
+                    else {
+                        $('#swarmErrorLogsModalBody').empty().append(`
+                            <div class="item-center">
+                                Error
+                            </div>
+                        `)
+                        const responseError = JSON.parse(error.responseText)
+                        notificator('Error', responseError.reason, 'error')
+                    }
+                }
+            )
+        }
+
+        function removeSwarmResponser(event) {
+            $('#removeSwarmButton').attr('data-responser-name', event.getAttribute('data-responser-name')).attr('data-id', event.getAttribute('data-id'))
         }
 
         function callAPI(method, endpoint, onLoading, onSuccess, onError, body = null) {
@@ -618,6 +725,62 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modsecurityDeleteModalCloseButton">Close</button>
                 <button type="button" class="btn btn-danger" id="removeModSecurityButton">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="swarmDetailsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="swarmDetailsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="swarmDetailsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="swarmDetailsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="updateSwarmButton">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="swarmErrorLogsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="swarmErrorLogsModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="swarmErrorLogsModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="swarmErrorLogsModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="emptySwarmErrorlogButton">Empty Logs</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="swarmDeleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="swarmDeleteModalTitle">Remove Responser</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                After removing, the Execution of this Responser will also be deleted!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="swarmDeleteModalCloseButton">Close</button>
+                <button type="button" class="btn btn-danger" id="removeSwarmButton">Remove</button>
             </div>
         </div>
     </div>
