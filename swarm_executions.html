@@ -255,7 +255,7 @@
                 function (data) {
                     const responseData = JSON.parse(data.responseText)
                     $('#lastLogsModalBody').empty().append(`
-                        <pre><textarea class="form-control" disabled="true" rows="20">${responseData.data.last_logs != null ? JSON.stringify(JSON.parse(responseData.data), null, 4) : null}</textarea></pre>
+                        <pre><textarea class="form-control" disabled="true" rows="20">${responseData.data.last_logs != null ? JSON.stringify(responseData.data, null, 4) : null}</textarea></pre>
                     `)
                 },
                 function () {
